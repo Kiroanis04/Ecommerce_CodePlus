@@ -4,9 +4,13 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.API", "src\ECommerce.API\ECommerce.API.csproj", "{A1111111-1111-1111-1111-111111111111}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.DAL", "src\ECommerce.DAL\ECommerce.DAL.csproj", "{C3333333-3333-3333-3333-333333333333}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Domain", "src\ECommerce.DAL\ECommerce.Domain.csproj", "{C3333333-3333-3333-3333-333333333333}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Tests", "tests\ECommerce.Tests\ECommerce.Tests.csproj", "{D4444444-4444-4444-4444-444444444444}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Application", "ECommerce.Application\ECommerce.Application.csproj", "{1508B218-A9D6-4432-916A-2CCF0AD72D79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Infrastructure", "ECommerce.Infrastructure\ECommerce.Infrastructure.csproj", "{24FC52C5-09A8-4917-B21F-34F20BACECFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,8 +30,19 @@ Global
 		{D4444444-4444-4444-4444-444444444444}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4444444-4444-4444-4444-444444444444}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4444444-4444-4444-4444-444444444444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1508B218-A9D6-4432-916A-2CCF0AD72D79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1508B218-A9D6-4432-916A-2CCF0AD72D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1508B218-A9D6-4432-916A-2CCF0AD72D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1508B218-A9D6-4432-916A-2CCF0AD72D79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24FC52C5-09A8-4917-B21F-34F20BACECFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24FC52C5-09A8-4917-B21F-34F20BACECFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24FC52C5-09A8-4917-B21F-34F20BACECFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24FC52C5-09A8-4917-B21F-34F20BACECFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB079F76-99AB-4411-8214-6764D70AE3DF}
 	EndGlobalSection
 EndGlobal
