@@ -1,4 +1,10 @@
-using ECommerce.API.DTOs;
+using ECommerce.Application.Products.Commands.Create;
+using ECommerce.Application.Products.Commands.Delete;
+using ECommerce.Application.Products.Commands.DeleteProduct;
+using ECommerce.Application.Products.Commands.Update;
+using ECommerce.Application.Products.DTOs;
+using ECommerce.Application.Products.Queries.GetAll;
+using ECommerce.Application.Products.Queries.GetById;
 using ECommerce.Application.Services;
 using ECommerce.DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -7,26 +13,20 @@ namespace ECommerce.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductsController : ControllerBase
+public class ProductsController : BaseApiController
 {
-    private readonly ProductService _productService;
-
-    public ProductsController(ProductService productService)
-    {
-        _productService = productService;
-    }
 
     [HttpGet]
-    public async Task<ActionResult<List<Product>>> GetAll()
+    public async Task<ActionResult<List<Product>>> GetAll(CancellationToken cancellationToken)
     {
-        var products = await _productService.GetAllAsync();
+        var products = await Sender.Send(new GetAllProductsQuery(), cancellationToken);
         return Ok(products);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Product>> GetById(int id)
+    public async Task<ActionResult<Product>> GetById(int id, CancellationToken cancellationToken)
     {
-        var product = await _productService.GetByIdAsync(id);
+        var product = await Sender.Send(new GetByIdQuery(id), cancellationToken);
         if (product == null)
             return NotFound($"Product with ID {id} not found.");
 
@@ -36,7 +36,7 @@ public class ProductsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Product>> Create([FromBody] CreateProductDto dto)
     {
-        var (success, error, product) = await _productService.CreateAsync(dto);
+        var (success, error, product) = await Sender.Send(CreateCommand(dto));
         if (!success)
             return BadRequest(error);
 
@@ -46,7 +46,7 @@ public class ProductsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] Product product)
     {
-        var (success, error) = await _productService.UpdateAsync(id, product);
+        var (success, error) = await Sender.Send(UpdateProductCommand(id,product));
         if (!success)
         {
             return error!.Contains("not found") ? NotFound(error) : BadRequest(error);
@@ -58,7 +58,7 @@ public class ProductsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var (success, error) = await _productService.DeleteAsync(id);
+        var (success, error) = await Sender.Send(DeleteProductCommand(id));
         if (!success)
             return NotFound(error);
 

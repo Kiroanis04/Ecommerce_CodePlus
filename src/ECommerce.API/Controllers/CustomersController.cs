@@ -1,24 +1,22 @@
-using ECommerce.API.DTOs;
+using ECommerce.Application.Customers.Commands.RegisterCustomer;
+using ECommerce.Application.Customers.Commands.UpgradeToVip;
+using ECommerce.Application.Customers.DTOs;
+using ECommerce.Application.Customers.Queries.GetById;
 using ECommerce.Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading;
 
 namespace ECommerce.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CustomersController : ControllerBase
+public class CustomersController : BaseApiController
 {
-    private readonly CustomerService _customerService;
-
-    public CustomersController(CustomerService customerService)
-    {
-        _customerService = customerService;
-    }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult> GetById(int id)
+    public async Task<ActionResult> GetById(int id, CancellationToken cancellationToken)
     {
-        var customer = await _customerService.GetByIdAsync(id);
+        var customer = await Sender.Send(new GetCustomerByIdQuery(id),cancellationToken);
         if (customer == null)
             return NotFound($"Customer with ID {id} not found.");
 
@@ -26,9 +24,9 @@ public class CustomersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create([FromBody] CreateCustomerDto dto)
+    public async Task<ActionResult> Create([FromBody] CreateCustomerDto dto, CancellationToken cancellationToken)
     {
-        var (success, error, customer) = await _customerService.CreateAsync(dto);
+        var (success, error, customer) = await Sender.Send(new RegisterCustomerCommand(dto), cancellationToken);
         if (!success)
             return BadRequest(error);
 
@@ -36,9 +34,9 @@ public class CustomersController : ControllerBase
     }
 
     [HttpPost("{id}/upgrade-vip")]
-    public async Task<IActionResult> UpgradeToVip(int id)
+    public async Task<IActionResult> UpgradeToVip(int id, CancellationToken cancellationToken)
     {
-        var (success, error) = await _customerService.UpgradeToVipAsync(id);
+        var (success, error) = await await Sender.Send(new UpgradeCustomerToVipCommand(id), cancellationToken);
         if (!success)
         {
             if (error == "NotFound")

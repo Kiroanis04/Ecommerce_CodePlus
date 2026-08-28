@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ECommerce.Application\ECommerce.Application.csproj" />
-    <ProjectReference Include="..\src\ECommerce.DAL\ECommerce.Domain.csproj" />
   </ItemGroup>
 
 </Project>

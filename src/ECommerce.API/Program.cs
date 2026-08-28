@@ -1,6 +1,7 @@
 using ECommerce.Application.Repository_Interfaces;
 using ECommerce.Application.Services;
 using ECommerce.DAL.Context;
+using ECommerce.Application.DependencyInjection;
 using ECommerce.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddApplicationServices();
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

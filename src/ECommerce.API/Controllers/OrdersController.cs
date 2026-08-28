@@ -1,4 +1,6 @@
-using ECommerce.API.DTOs;
+using ECommerce.Application.Orders.DTOs;
+using ECommerce.Application.Orders.Queries.GetCustomerOrders;
+using ECommerce.Application.Orders.Queries.GetOrder;
 using ECommerce.Application.Services;
 using ECommerce.DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -7,27 +9,21 @@ namespace ECommerce.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class OrdersController : ControllerBase
+public class OrdersController : BaseApiController
 {
-    private readonly OrderService _orderService;
-
-    public OrdersController(OrderService orderService)
-    {
-        _orderService = orderService;
-    }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Order>> GetOrder(int id)
+    public async Task<ActionResult<Order>> GetOrder(int id,CancellationToken cancellationToken)
     {
-        var order = await _orderService.GetOrderAsync(id);
+        var order = await Sender.Send(new GetOrderByIdQuery(id), cancellationToken);
         if (order == null) return NotFound();
         return Ok(order);
     }
 
     [HttpGet("customer/{customerId}")]
-    public async Task<ActionResult<List<Order>>> GetCustomerOrders(int customerId)
+    public async Task<ActionResult<List<Order>>> GetCustomerOrders(int customerId, CancellationToken cancellationToken)
     {
-        var orders = await _orderService.GetCustomerOrdersAsync(customerId);
+        var orders = await Sender.Send(new GetCustomerOrdersQuery(customerId),cancellationToken);
         return Ok(orders);
     }
 
