@@ -1,10 +1,5 @@
-namespace ECommerce.API.DTOs;
+namespace ECommerce.Application.Orders.DTOs;
 
-public class OrderItemRequestDto
-{
-    public int ProductId { get; set; }
-    public int Quantity { get; set; }
-}
 
 public class CreateOrderDto
 {

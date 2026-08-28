@@ -1,4 +1,4 @@
-﻿using ECommerce.API.DTOs;
+﻿using ECommerce.Application.Customers.DTOs;
 using ECommerce.Application.Repository_Interfaces;
 using ECommerce.DAL.Entities;
 using System;
