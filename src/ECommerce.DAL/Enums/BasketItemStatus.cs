@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ECommerce.Domain.Enums
+{
+    public enum BasketItemStatus
+    {
+        Active = 0,
+        Deleted = 1,
+        ConvertedToOrder = 2
+    }
+}
